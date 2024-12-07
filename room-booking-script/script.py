@@ -51,7 +51,7 @@ swipe_access_names_field = driver.find_element(By.ID, "input_47_53")
 swipe_access_names_field.send_keys(user_info['first_name'] + ' ' + user_info['last_name'])
 
 number_of_attendees_field = driver.find_element(By.ID, "input_47_54")
-number_of_attendees_field.send_keys("20-30") #hardcoded here, can be modified on the page if needed
+number_of_attendees_field.send_keys("30") #hardcoded here, can be modified on the page if needed
 
 food_served_field = driver.find_element(By.ID, "choice_47_55_1")
 food_served_field.click() #refactor variable name later
