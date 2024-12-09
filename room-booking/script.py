@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 import json
 
-with open('config.json') as f:
+with open('room-booking/config.json') as f:
     user_info = json.load(f)
 
 chrome_options = Options()
