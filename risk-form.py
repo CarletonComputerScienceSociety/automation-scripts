@@ -6,6 +6,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 import json
 
+def click_radio_button(xpath):
+    button = driver.find_element(By.XPATH, xpath)
+    button.click()
+
+def fill_text_field(id, text):
+    field = driver.find_element(By.ID, id)
+    field.send_keys(text)
+
 with open('config.json') as f:
     user_info = json.load(f)
 
@@ -17,14 +25,6 @@ service = Service(driver_path)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 driver.get("https://stuapps.carleton.ca/sarms/event-risk/in-person")
-
-def click_radio_button(xpath):
-    button = driver.find_element(By.XPATH, xpath)
-    button.click()
-
-def fill_text_field(id, text):
-    field = driver.find_element(By.ID, id)
-    field.send_keys(text)
 
 xpaths = {
     "role_field": "//*[@id='covidForm']/fieldset[1]/div/div[6]/div[1]/label/input",

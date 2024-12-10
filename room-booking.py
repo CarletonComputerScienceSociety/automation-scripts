@@ -6,6 +6,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 import json
 
+def click_radio_button(id):
+    button = driver.find_element(By.ID, id)
+    button.click()
+
+def fill_text_field(id, text):
+    field = driver.find_element(By.ID, id)
+    field.send_keys(text)
+
 with open('config.json') as f:
     user_info = json.load(f)
 
@@ -18,46 +26,35 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 
 driver.get("https://carleton.ca/scs/student-clubs-and-societies-room-booking-request-form/")
 
-first_name_field = driver.find_element(By.ID, "input_47_61")
-first_name_field.send_keys(user_info['first_name'])
+text_field_ids = { # id: value # field
+    "input_47_61": user_info['first_name'],  # First Name
+    "input_47_62": user_info['last_name'],   # Last Name
+    "input_47_41": user_info['carleton_email'],  # Email
+    "input_47_41_2": user_info['carleton_email'],  # Confirm Email
+    "input_47_57": user_info['carleton_student_id'],  # Carleton ID
+    "input_47_53": user_info['first_name'] + ' ' + user_info['last_name'],  # Swipe Access Names
+    "input_47_54": "30",  # Number of Attendees
+}
 
-last_name_field = driver.find_element(By.ID, "input_47_62")
-last_name_field.send_keys(user_info['last_name'])
+radio_button_ids = { # id: field
+    "choice_47_59_3": "Name of Club",
+    "choice_47_55_1": "Food Served",
+    "input_47_42_1": "Consent"
+}
 
-email_field = driver.find_element(By.ID, "input_47_41")
-email_field.send_keys(user_info['carleton_email'])
+for id, text in text_field_ids.items():
+    fill_text_field(id, text)
 
-confirm_email_field = driver.find_element(By.ID, "input_47_41_2")
-confirm_email_field.send_keys(user_info['carleton_email'])
+for id in radio_button_ids.keys():
+    click_radio_button(id)
 
-carleton_id_field = driver.find_element(By.ID, "input_47_57")
-carleton_id_field.send_keys(user_info['carleton_student_id'])
-
-name_of_club_field = driver.find_element(By.ID, "choice_47_59_3")
-name_of_club_field.click() #refactor variable name later
-
-if (user_info['position_in_society'] == 'President'):
-    position_in_society_field = driver.find_element(By.ID, "choice_47_49_0")
-    position_in_society_field.click()
-
+# Position in Society handled separately
+if user_info['position_in_society'] == 'President':
+    click_radio_button("choice_47_49_0")
 else:
-    position_in_society_field_button = driver.find_element(By.ID, "choice_47_49_3")
-    position_in_society_field_button.click()
+    click_radio_button("choice_47_49_3")
+    fill_text_field("input_47_49_other", user_info['position_in_society'])
 
-    position_in_society_field_text = driver.find_element(By.ID, "input_47_49_other")
-    position_in_society_field_text.send_keys(user_info['position_in_society']) #refactor variable name later
-
-swipe_access_names_field = driver.find_element(By.ID, "input_47_53")
-swipe_access_names_field.send_keys(user_info['first_name'] + ' ' + user_info['last_name'])
-
-number_of_attendees_field = driver.find_element(By.ID, "input_47_54")
-number_of_attendees_field.send_keys("30") #hardcoded here, can be modified on the page if needed
-
-food_served_field = driver.find_element(By.ID, "choice_47_55_1")
-food_served_field.click() #refactor variable name later
-
-consent_field = driver.find_element(By.ID, "input_47_42_1")
-consent_field.click() #refactor variable name later
 
 
 
