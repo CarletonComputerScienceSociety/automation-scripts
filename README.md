@@ -6,14 +6,10 @@
 ```
 pip install -r requirements.txt
 ```
-- update the config.json file(s) with your information
+- update the config.json file with your information
 - run
 ```
-python3 folder-name/script.py
+python3 <script-name>
 ```
-or 
-```
-cd folder-name
-python3 script.py
-```
+
 
