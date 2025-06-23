@@ -24,7 +24,7 @@ driver_path = ChromeDriverManager().install()
 service = Service(driver_path)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-driver.get("https://stuapps.carleton.ca/sarms/event-risk/in-person")
+driver.get("https://sarms.carleton.ca/event-risk/in-person")
 
 xpaths = {
     "role_field": "//*[@id='covidForm']/fieldset[1]/div/div[6]/div[1]/label/input",
